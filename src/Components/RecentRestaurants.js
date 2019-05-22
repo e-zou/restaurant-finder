@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import RecentList from "./RecentList.js";
+import logo from '../images/logo.png'
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -82,9 +83,13 @@ export default class RecentRestaurants extends React.Component {
     render() {
         return (
             <div>
-                <div className="searchbar">
-                    <input onChange={(e) => {this.updateQuery(e.target.value)}} value={this.state.query} placeholder="Search..."/> 
-                    <button onClick={this.submitQuery} type="submit">Go</button>
+                <div className="header navBar">
+                    <img className="logo" alt="logo" src={logo}/>
+                    <h1 id="title">Restaraunt Finder</h1>
+                    <div className="searchbar">
+                        <input onChange={(e) => {this.updateQuery(e.target.value)}} value={this.state.query} placeholder="Search..."/> 
+                        <button onClick={this.submitQuery} type="submit">Go</button>
+                    </div>
                 </div>
                 <div className="filters">
                     <p className="noMargin">Filters: </p>
