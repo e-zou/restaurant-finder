@@ -8,12 +8,6 @@ export default class RecentList extends React.Component {
     render() {
         let restaurants = this.props.restaurants;
         return (
-            <div>
-            {/* <div className="filters">
-                <p className="noMargin">Filters: </p>
-                <button onClick={() => this.sortByPrice()}>Sort by Price</button>
-                <button onClick={() => this.sortByRating()}>Sort by Rating</button>
-            </div> */}
             <div className="restLayout">
                 {restaurants.map(restaurant => (
                     // <li>{restaurant.name}</li>
@@ -34,7 +28,6 @@ export default class RecentList extends React.Component {
                         </tbody>
                     </table>
                 ))}
-            </div>
             </div>
         );
     }

@@ -1,7 +1,10 @@
 import React from "react";
 import axios from "axios";
 import RecentList from "./RecentList.js";
-import logo from '../images/logo.png'
+import Map from "./Map.js";
+import logo from '../images/logo.png';
+
+
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -55,6 +58,9 @@ export default class RecentRestaurants extends React.Component {
             const ratings = data.map(r => r.rating);
             // const photos = data.map(r => r.photos.photo_reference);
             for (let i = 0; i < data.length; i++) {
+                if (prices[i] == '') {
+                    
+                }
                 restaurants.push({ name: names[i], price: prices[i], rating: ratings[i], 
                     // photo: photos[i]
                 });
@@ -87,7 +93,7 @@ export default class RecentRestaurants extends React.Component {
                     <img className="logo" alt="logo" src={logo}/>
                     <h1 id="title">Restaraunt Finder</h1>
                     <div className="searchbar">
-                        <input onChange={(e) => {this.updateQuery(e.target.value)}} value={this.state.query} placeholder="Search..."/> 
+                        <input className="searchterm" onChange={(e) => {this.updateQuery(e.target.value)}} value={this.state.query} placeholder="Search..."/> 
                         <button onClick={this.submitQuery} type="submit">Go</button>
                     </div>
                 </div>
