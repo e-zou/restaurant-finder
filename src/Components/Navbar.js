@@ -1,6 +1,7 @@
 import React from "react";
 import logo from '../images/logo.png'
 import 'antd/dist/antd.css';
+import Searchbar from "./Searchbar";
 
 function Navbar(props) {
     return (
