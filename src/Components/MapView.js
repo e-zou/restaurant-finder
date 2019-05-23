@@ -1,8 +1,19 @@
 import React from "react";
-import { Map, CircleMarker, TileLayer, Tooltip } from "react-leaflet";
+import { Map, Marker, TileLayer, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+// import icon from "../images/marker.png";
+import L from "leaflet";
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+    iconUrl: require("leaflet/dist/images/marker-icon.png"),
+    shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+});
 
 export default class MapView extends React.Component {
+
+
 
     render() {
         let restaurants = this.props.restaurants;
@@ -10,9 +21,8 @@ export default class MapView extends React.Component {
         return (
             <div className="map">
                  <Map
-                    style={{ height: "400px", width: "100%", top: "0"}}
+                    style={{ height: "400px", width: "100%"}}
                     zoom={12}
-                    // center={[x, y]}
                     center={[38.0401, -78.4850]}
                     >
         
@@ -32,8 +42,8 @@ export default class MapView extends React.Component {
                         console.log(restaurant);
                         return (
                             // beware of how you call things in CircleMarker vs. regular html tags
-                            <CircleMarker
-                                center={[restaurant["coordinates"]["lat"], restaurant["coordinates"]["lng"]]}
+                            <Marker
+                                position={[restaurant["coordinates"]["lat"], restaurant["coordinates"]["lng"]]}
                             >
                                 {/* offset={[-8, -2]} */}
                                 <Tooltip direction="top" opacity={1}>
@@ -41,7 +51,7 @@ export default class MapView extends React.Component {
                                     <p>Price: {restaurant["price"]}</p>
                                     <p>Rating: {restaurant["rating"]}</p>
                                 </Tooltip>
-                            </CircleMarker>
+                            </Marker>
                         )
                     })
                     }

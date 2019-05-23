@@ -64,6 +64,15 @@ export default class RecentRestaurants extends React.Component {
             for (let j = 0; j < prices.length; j++) {
                 if (prices[j] == '' || prices[j] == null) {
                     prices[j] = "N/A";
+                } else {
+                    let k = 0;
+                    console.log(prices[j]);
+                    let str = ""; // string for $$$
+                    for (k = prices[j]; k >= 0; k--) {
+                         str = str.concat("$");
+                    }
+                    console.log(str);
+                    prices[j] = str;
                 }
             }
             for (let i = 0; i < data.length; i++) {
