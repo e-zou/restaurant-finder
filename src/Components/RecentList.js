@@ -19,6 +19,9 @@ export default class RecentList extends React.Component {
                         <tr className="restaurantName">
                             <td key={restaurant.id}> {restaurant.name}</td>
                         </tr>
+                        {/* <tr className="restaurantName">
+                            <td key={restaurant.id}> {restaurant.location}</td>
+                        </tr> */}
                         <tr>
                             <td key={restaurant.id}>Price: {restaurant.price}</td>
                         </tr>

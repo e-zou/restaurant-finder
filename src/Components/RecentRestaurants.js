@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import RecentList from "./RecentList.js";
-import Map from "./Map.js";
+import MapView from "./MapView.js";
 import logo from '../images/logo.png';
 
 
@@ -54,14 +54,21 @@ export default class RecentRestaurants extends React.Component {
             // Same thing as above
             const restaurants = [];
             const names = data.map(r => r.name);
-            const prices = data.map(r => r.price_level);
+            let prices = data.map(r => r.price_level);
             const ratings = data.map(r => r.rating);
+            const coordinates = data.map(r => r.geometry.location);
+
             // const photos = data.map(r => r.photos.photo_reference);
-            for (let i = 0; i < data.length; i++) {
-                if (prices[i] == '') {
-                    
+            
+            // Changes blank prices to display "n/a"
+            for (let j = 0; j < prices.length; j++) {
+                if (prices[j] == '' || prices[j] == null) {
+                    prices[j] = "N/A";
                 }
+            }
+            for (let i = 0; i < data.length; i++) {
                 restaurants.push({ name: names[i], price: prices[i], rating: ratings[i], 
+                    coordinates: coordinates[i],
                     // photo: photos[i]
                 });
             }
@@ -87,6 +94,7 @@ export default class RecentRestaurants extends React.Component {
     //  className="searchterm"  type="search" id="site-search" name="q"/>
 
     render() {
+        // console.log(this.state);
         return (
             <div>
                 <div className="header navBar">
@@ -102,12 +110,10 @@ export default class RecentRestaurants extends React.Component {
                     <button onClick={() => this.sortByPrice()}>Sort by Price</button>
                     <button onClick={() => this.sortByRating()}>Sort by Rating</button>
                 </div>
-                {/* make a prop called restaraunts that passes in the RecentRestaurant's state's restaurant */}
-                {/* const restaurants = this.state.restaurants; */}
-                {/* <RecentList restaurants={restaurants}/> */}
-                {/* this.state.restaurant is already a const from above */}
+                <MapView restaurants={this.state.restaurants}/>
                 <RecentList restaurants={this.state.restaurants}/> 
             </div>
         );
+        
     }
 }
