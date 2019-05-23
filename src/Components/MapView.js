@@ -1,5 +1,5 @@
 import React from "react";
-import { Map, CircleMarker, TileLayer } from "react-leaflet";
+import { Map, CircleMarker, TileLayer, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 export default class MapView extends React.Component {
@@ -10,7 +10,7 @@ export default class MapView extends React.Component {
         return (
             <div className="map">
                  <Map
-                    style={{ height: "200px", width: "100%" }}
+                    style={{ height: "400px", width: "100%", top: "0"}}
                     zoom={12}
                     // center={[x, y]}
                     center={[38.0401, -78.4850]}
@@ -29,12 +29,20 @@ export default class MapView extends React.Component {
                     })
                     } */}
                     {restaurants.map(restaurant => {
-                        // console.log(restaurant["coordinates"]["lat"]);
+                        console.log(restaurant);
                         return (
                             // beware of how you call things in CircleMarker vs. regular html tags
                             <CircleMarker
                                 center={[restaurant["coordinates"]["lat"], restaurant["coordinates"]["lng"]]}
-                            />)
+                            >
+                                {/* offset={[-8, -2]} */}
+                                <Tooltip direction="top" opacity={1}>
+                                    <p>{restaurant["name"]}</p>
+                                    <p>Price: {restaurant["price"]}</p>
+                                    <p>Rating: {restaurant["rating"]}</p>
+                                </Tooltip>
+                            </CircleMarker>
+                        )
                     })
                     }
                 </Map>

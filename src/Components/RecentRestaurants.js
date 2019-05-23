@@ -97,6 +97,7 @@ export default class RecentRestaurants extends React.Component {
         // console.log(this.state);
         return (
             <div>
+                {/* Header */}
                 <div className="header navBar">
                     <img className="logo" alt="logo" src={logo}/>
                     <h1 id="title">Restaraunt Finder</h1>
@@ -105,13 +106,16 @@ export default class RecentRestaurants extends React.Component {
                         <button onClick={this.submitQuery} type="submit">Go</button>
                     </div>
                 </div>
+                {/* Filters */}
                 <div className="filters">
                     <p className="noMargin">Filters: </p>
                     <button onClick={() => this.sortByPrice()}>Sort by Price</button>
                     <button onClick={() => this.sortByRating()}>Sort by Rating</button>
                 </div>
-                <MapView restaurants={this.state.restaurants}/>
-                <RecentList restaurants={this.state.restaurants}/> 
+                <div className="restaurants">
+                    <MapView restaurants={this.state.restaurants}/>
+                    <RecentList restaurants={this.state.restaurants}/>
+                </div>
             </div>
         );
         
