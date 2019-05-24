@@ -5,19 +5,16 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 delete L.Icon.Default.prototype._getIconUrl;
 
-L.Icon.Default.mergeOptions({
+L.Icon.Default.mergeOptions({ // Gets proper URL for markers to appear
     iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
     iconUrl: require("leaflet/dist/images/marker-icon.png"),
     shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
 export default class MapView extends React.Component {
-
-
-
     render() {
         let restaurants = this.props.restaurants;
-        // let coordinates = restaurants.map(r => r.coordinates);
+        
         return (
             <div className="map">
                  <Map
@@ -27,26 +24,16 @@ export default class MapView extends React.Component {
                     >
         
                     <TileLayer url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                    {/* {coordinates.map(coordinate => {
-                        // let lats = coordinate.lat;
-                        // let lngs = coordinate.lng;
-                        console.log(coordinate.lat);
-                        return (
-                            // beware of how you call things in CircleMarker vs. regular html tags
-                            <CircleMarker
-                                center={[coordinate["lat"], coordinate["lng"]]}
-                            />)
-                    })
-                    } */}
                     {restaurants.map(restaurant => {
-                        console.log(restaurant);
                         return (
                             // beware of how you call things in CircleMarker vs. regular html tags
                             <Marker
                                 position={[restaurant["coordinates"]["lat"], restaurant["coordinates"]["lng"]]}
+                                riseOnHover={true}
+                                bubblingMouseEvents={true}
                             >
                                 {/* offset={[-8, -2]} */}
-                                <Tooltip direction="top" opacity={1}>
+                                <Tooltip direction="top" opacity={1} offset={[0, -22]}>
                                     <p>{restaurant["name"]}</p>
                                     <p>Price: {restaurant["price"]}</p>
                                     <p>Rating: {restaurant["rating"]}</p>

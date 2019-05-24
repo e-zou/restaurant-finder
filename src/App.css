@@ -1,13 +1,5 @@
 /* Main.js */
-.restaurant {
-  width: 30%;
-  height: 120px;
-  margin-right: 1.5%;
-  margin-left: 1.5%;
-  /* text-align: left; */
-  border: 1px gray solid;
-  margin-bottom: 3%;
-}
+
 /* Layout of Restaraunt List */
 .restLayout {
   display: flex;
@@ -27,18 +19,20 @@
   justify-content: flex-start;
   align-items: center;
   background-color: gray;
+  background-image: url(images/platter.jpg);
   margin-bottom: 50px;
 }
 /* Logo */
 .logo {
   width: 150px;
   height: auto;
+  filter: invert(100);
 }
-/* <tr> row for the restaurant's name */
-.restaurantName {
-  background-color: gray;
+
+#title {
   color: white;
 }
+
 /* The word 'filters' */
 .noMargin {
   margin: 0;
@@ -78,13 +72,71 @@
   top: 0 !important;
 }
 
-
 /* Restaraunt card */
 .restaurants {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
+.restaurant {
+  width: 30%;
+  height: 120px;
+  margin-right: 1.5%;
+  margin-left: 1.5%;
+  /* text-align: left; */
+  margin-bottom: 3%;
+  border-radius: 5px;
+  float: left;
+  position: relative;
+  transition: height 0.5s;
+  transition: width 0.5s;
+  overflow: hidden;
+}
+.restaurant > tbody {
+  border: 2px #4193CF solid;
+  border-radius: 5px;
+}
+
+/* <tr> row for the restaurant's name */
+.restaurantName {
+  background-color: #4193CF;
+  color: white;
+}
+
+.restaurant:hover > tbody > .restaurantName{
+  background-color: #00EEFF;
+}
+.restaurant:hover {
+  border-color: #00EEFF;
+  width: 31%;
+  height: 125px;
+}
+.restaurant:hover > tbody {
+  border: 2px #00EEFF solid;
+}
+
+/* .restaurant:hover::parent > .map > .leaflet-container > .leaflet-pane > .leaflet-marker > .leaflet-marker-icon {
+  height: 50px !important ;
+  margin-top: -50px !important;
+  width: 30px !important;
+  margin-left: -14px !important;
+} */
+/* Original: width: 25, height: 41, margin-top: -41, margin-left: -12px */
+.leaflet-marker-icon:hover { 
+  height: 50px !important ;
+  margin-top: -50px !important;
+  width: 30px !important;
+  margin-left: -14px !important;
+  /* filter: brightness(10%); */
+  filter: saturate(8);
+}
+
+/* p */
+/* .leaflet-popup-pane .leaflet-tooltip-pane { 
+  margin-bottom: 30px !important;
+  width: 100px !important;
+  height: 100px !important;
+} */
 
 /* App.js */
 .App {

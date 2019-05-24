@@ -12,8 +12,8 @@ export default class RecentRestaurants extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            restaurants : [],
-            query : ''
+            restaurants : [], // each restaurant object is made up of {name, id, price, rating, coordinates}
+            query : '',
         }
         this.updateQuery = this.updateQuery.bind(this);
         this.submitQuery = this.submitQuery.bind(this);
@@ -52,41 +52,67 @@ export default class RecentRestaurants extends React.Component {
             // }
 
             // Same thing as above
+            // Creates individual arrays of the data
             const restaurants = [];
             const names = data.map(r => r.name);
-            let prices = data.map(r => r.price_level);
+            const prices = data.map(r => r.price_level);
             const ratings = data.map(r => r.rating);
             const coordinates = data.map(r => r.geometry.location);
+            
+            const photos = data.map(r => r.photos); // gets photos attributes
+            for (let m = 0; m < photos.length; m++) {
+                if (photos[m] == undefined) {
+                    photos[m] = [];
+                    photos[m].push({photo_reference: ""});
+                    // console.log(m);
+                }
+            }
 
-            // const photos = data.map(r => r.photos.photo_reference);
+            const photos2 = photos.map(r => r[0]); // within each attribute there is an id [0] and within that is the url
+            // console.log(photos2);
+
+            const photo_refs = photos2.map(r => r.photo_reference);
+            // console.log(photo_refs);
+
+            let url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=" + API_KEY + "&photoreference=";
+            for (let e = 0; e < photo_refs.length; e++) {
+                let curr = photo_refs[e];
+                photo_refs[e] = url + curr;
+                // console.log(photo_refs[e]);
+            }
+            console.log(photo_refs[0]);
+
+            
+            const ids = [];
+            for (let l = 0; l < names.length; l++) {
+                ids[l] = l;
+            }
             
             // Changes blank prices to display "n/a"
             for (let j = 0; j < prices.length; j++) {
                 if (prices[j] == '' || prices[j] == null) {
-                    prices[j] = "N/A";
+                    prices[j] = "n/a";
                 } else {
                     let k = 0;
-                    console.log(prices[j]);
                     let str = ""; // string for $$$
                     for (k = prices[j]; k >= 0; k--) {
                          str = str.concat("$");
                     }
-                    console.log(str);
                     prices[j] = str;
                 }
             }
+            // For each of the individual arrays, push that information to build restaurant array
             for (let i = 0; i < data.length; i++) {
-                restaurants.push({ name: names[i], price: prices[i], rating: ratings[i], 
+                restaurants.push({ name: names[i], id: ids[i], price: prices[i], rating: ratings[i], 
                     coordinates: coordinates[i],
-                    // photo: photos[i]
+                    photo_ref: photo_refs[i]
                 });
             }
+            
 
-            this.setState({restaurants: restaurants});
-
-            console.log(res.data);
+            this.setState({restaurants: restaurants, ids: ids});
+            console.log(this.state.restaurants)
         })
-        console.log("Success");
 
     }
 
@@ -110,10 +136,10 @@ export default class RecentRestaurants extends React.Component {
                 <div className="header navBar">
                     <img className="logo" alt="logo" src={logo}/>
                     <h1 id="title">Restaraunt Finder</h1>
-                    <div className="searchbar">
+                    <form className="searchbar" onSubmit={this.submitQuery}>
                         <input className="searchterm" onChange={(e) => {this.updateQuery(e.target.value)}} value={this.state.query} placeholder="Search..."/> 
                         <button onClick={this.submitQuery} type="submit">Go</button>
-                    </div>
+                    </form>
                 </div>
                 {/* Filters */}
                 <div className="filters">
