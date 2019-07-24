@@ -135,7 +135,7 @@ export default class RecentRestaurants extends React.Component {
                 {/* Header */}
                 <div className="header navBar">
                     <img className="logo" alt="logo" src={logo}/>
-                    <h1 id="title">Restaraunt Finder</h1>
+                    <h1 id="title">Charlottesville Restaraunt Finder</h1>
                     <form className="searchbar" onSubmit={this.submitQuery}>
                         <input className="searchterm" onChange={(e) => {this.updateQuery(e.target.value)}} value={this.state.query} placeholder="Search..."/> 
                         <button onClick={this.submitQuery} type="submit">Go</button>
